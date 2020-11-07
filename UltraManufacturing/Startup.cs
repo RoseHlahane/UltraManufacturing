@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-//using UltraManufacturing.Services;
+using UltraManufacturing.Services;
 using UltraManufacturing.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,9 +47,9 @@ namespace UltraManufacturing
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            
-            
-
+            services.Configure<SmtpOptions>(Configuration);
+            services.Configure<ContactOptions>(Configuration);
+            services.Configure<AuthOptions>(Configuration);
 
             var connectionString = Configuration.GetConnectionString("UltraManufacturingDatabase");
             services.AddDbContext<employeesContext>(options => options.UseSqlServer(connectionString));
