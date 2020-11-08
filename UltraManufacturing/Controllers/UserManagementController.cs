@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UltraManufacturing.Models.Entities;
 using UltraManufacturing.Models.ViewModels;
-//using UltraManufacturing.Services;
+using UltraManufacturing.Services;
 using UltraManufacturing.Filters;
 
 namespace UltraManufacturing.Controllers
@@ -30,9 +30,20 @@ namespace UltraManufacturing.Controllers
             return View(await _context.User.ToListAsync());
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> Index(string empSearch)
+        {
+            ViewData["GetEmployeeDetails"] = empSearch;
 
-        
+            var empQuery = from x in _context.User select x;
+            if (!String.IsNullOrEmpty(empSearch))
+            {
+                empQuery = empQuery.Where(x => x.Email.Contains(empSearch) || x.LastName.Contains(empSearch));
+            }
+            return View(await empQuery.AsNoTracking().ToListAsync());
+        }
+
+
         // GET: UserManagement/Details/5
         public async Task<IActionResult> Details(int? id)
         {
