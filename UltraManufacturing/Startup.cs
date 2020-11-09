@@ -55,7 +55,7 @@ namespace UltraManufacturing
             services.AddDbContext<employeesContext>(options => options.UseSqlServer(connectionString));
 
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
-            
+            services.AddSingleton<Cryptography>();
             services.AddHttpContextAccessor();
 
             
