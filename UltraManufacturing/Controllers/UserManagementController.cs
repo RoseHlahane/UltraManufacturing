@@ -152,7 +152,17 @@ namespace UltraManufacturing.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            
+            var user = await _context.User.Include(u => u.UserCredential)
+           .Include(u => u.UserPermission).SingleOrDefaultAsync(m => m.Id == id);
+
+            _context.UserCredential.Remove(user.UserCredential);
+            foreach (var userPermission in user.UserPermission)
+            {
+                _context.UserPermission.Remove(userPermission);
+            }
+            _context.User.Remove(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
         
 
@@ -163,11 +173,22 @@ namespace UltraManufacturing.Controllers
 
         public async Task<IActionResult> UpdatePassword(int ? id)
         {
-            
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.User.SingleOrDefaultAsync(m => m.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            ViewData["User"] = user;
+
+            return View();
         }
 
     
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdatePassword(int id, UserManagementUpdatePassword model)
