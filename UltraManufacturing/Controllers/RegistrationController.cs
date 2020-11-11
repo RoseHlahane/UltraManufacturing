@@ -24,7 +24,18 @@ namespace UltraManufacturing.Controllers
             return View(await _context.Cmpg323Project2Dataset.ToListAsync());
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> Index(string empSearch)
+        {
+            ViewData["GetEmployeeDetails"] = empSearch;
+
+            var empQuery = from x in _context.Cmpg323Project2Dataset select x;
+            if (!String.IsNullOrEmpty(empSearch))
+            {
+                empQuery = empQuery.Where(x => x.JobRole.Contains(empSearch) || x.Department.Contains(empSearch));
+            }
+            return View(await empQuery.AsNoTracking().ToListAsync());
+        }
 
         // GET: Registration/Details/5
         public async Task<IActionResult> Details(string id)
