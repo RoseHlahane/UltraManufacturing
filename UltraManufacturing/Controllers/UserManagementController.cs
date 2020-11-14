@@ -74,7 +74,30 @@ namespace UltraManufacturing.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(UserManagementCreate model)
         {
-            
+            if (ModelState.IsValid)
+            {
+                var user = new User()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    CreationDate = DateTime.UtcNow,
+                };
+
+                var passwordSalt = Guid.NewGuid().ToString();
+                var userCredential = new UserCredential()
+                {
+                    PasswordSalt = passwordSalt,
+                    HashedPassword = _cryptography.HashSHA256(model.Password + passwordSalt),
+                };
+
+                user.UserCredential = userCredential;
+
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
 
         
