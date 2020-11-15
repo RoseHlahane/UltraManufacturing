@@ -68,7 +68,6 @@ namespace UltraManufacturing.Controllers
             return View();
         }
 
-        
 
         [HttpPost]
         [ValidateAntiForgeryToken]

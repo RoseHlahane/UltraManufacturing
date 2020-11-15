@@ -57,9 +57,9 @@ namespace UltraManufacturing
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             services.AddSingleton<Smtp, Smtp>();
             services.AddSingleton<Cryptography>();
+            services.AddScoped<UMAuthentication>();
             services.AddHttpContextAccessor();
 
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
