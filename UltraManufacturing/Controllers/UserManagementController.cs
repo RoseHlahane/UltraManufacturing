@@ -127,23 +127,10 @@ namespace UltraManufacturing.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var user = await _context.User.SingleOrDefaultAsync(m => m.Id == id);
-                    await TryUpdateModelAsync(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                  var user = await _context.User.SingleOrDefaultAsync(m => m.Id == id);
+                  await TryUpdateModelAsync(user);
+                  await _context.SaveChangesAsync();
+             
                 return RedirectToAction(nameof(Index));
             }
 
@@ -217,25 +204,13 @@ namespace UltraManufacturing.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
+             
                     var userCredential = await _context.UserCredential.SingleOrDefaultAsync(m => m.Id == id);
                     var passwordSalt = Guid.NewGuid().ToString();
                     userCredential.PasswordSalt = passwordSalt;
                     userCredential.HashedPassword = _cryptography.HashSHA256(model.Password + passwordSalt);
                     await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+             
                 return RedirectToAction("Index");
             }
             ViewData["User"] = await _context.User.SingleOrDefaultAsync(m => m.Id == id);
