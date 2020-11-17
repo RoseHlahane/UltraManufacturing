@@ -10,7 +10,16 @@ namespace UltraManufacturing.Models.Entities
 
     public partial class UserMetadataType
     {
-        
+        [Required, StringLength(50, MinimumLength = 2)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required, StringLength(50, MinimumLength = 2)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required, EmailAddress, StringLength(100)]
+        public string Email { get; set; }
     }
 
 }
