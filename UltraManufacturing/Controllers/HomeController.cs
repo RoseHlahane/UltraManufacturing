@@ -37,35 +37,12 @@ namespace UltraManufacturing.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Your about page.";
 
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Contact(Contact formData)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(formData);
-            }
-            // 3 steps after receiving validator/ valid data?
-            //send an email to a specific email address
-            var htmlBody = $"<p>{formData.Name} ({formData.Email})</p><p>{formData.Phone}</p><p>{formData.Message}</p>";
-            var textBody = "{formData.Name} ({formData.Email})\r\n{formData.Phone}\r\n{formData.Message}";
-
-            _smtpService.SendSingle("Contact Form", htmlBody, textBody,
-                                        _contactOptions.ContactToName, _contactOptions.ContactToAddress,
-                                        _contactOptions.ContactFromName, _contactOptions.ContactFromAddress);
-
-
-            //2. Set a message
-            TempData["Message"] = "Thank you! Your message is sent to us.";
-            //3. Redirect the browser
-            return RedirectToAction("Contact");  //redirects user back to contact form
-                                                
-        }
-
+        
 
         public IActionResult Privacy()
         {

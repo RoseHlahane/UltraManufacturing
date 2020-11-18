@@ -107,22 +107,10 @@ namespace UltraManufacturing.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
+              
                     _context.Update(cmpg323Project2Dataset);
                     await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!Cmpg323Project2DatasetExists(cmpg323Project2Dataset.EmployeeNumber))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+              
                 return RedirectToAction(nameof(Index));
             }
             return View(cmpg323Project2Dataset);
