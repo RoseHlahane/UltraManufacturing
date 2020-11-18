@@ -32,7 +32,7 @@ namespace UltraManufacturing.Controllers
             var empQuery = from x in _context.Cmpg323Project2Dataset select x;
             if (!String.IsNullOrEmpty(empSearch))
             {
-                empQuery = empQuery.Where(x => x.JobRole.Contains(empSearch) || x.Department.Contains(empSearch));
+                empQuery = empQuery.Where(x => x.JobRole.Contains(empSearch) || x.EmployeeNumber.Contains(empSearch));
             }
             return View(await empQuery.AsNoTracking().ToListAsync());
         }
