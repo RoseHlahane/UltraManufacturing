@@ -30,7 +30,7 @@ namespace UltraManufacturing.Filters
             if (!service.ScopeAuthInfo.IsAuthenticated || !_permissions.Any(p => service.ScopeAuthInfo.Permissions.Contains(p)))
             {
                 var returnUrl = context.HttpContext.Request.Path;
-                // context.Result = new RedirectToActionResult("Login", "Account", new { returnUrl = returnUrl });
+                
                 context.Result = new RedirectToActionResult("Login", "Account", new { returnUrl });
             }
         }

@@ -14,14 +14,7 @@ namespace UltraManufacturing.Controllers
 {
     public class HomeController : Controller
     {
-        readonly Smtp _smtpService;
-        readonly ContactOptions _contactOptions;
-
-        public HomeController(Smtp smtpService, IOptions<ContactOptions> contactOptions)
-        {
-            _smtpService = smtpService;
-            _contactOptions = contactOptions.Value;
-        }
+        
 
         public IActionResult Index()
         {

@@ -26,10 +26,9 @@ namespace UltraManufacturing.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _employeeRegistration.User.ToListAsync());
-       }
+        }
 
-
-
+        
         public IActionResult Create(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;

@@ -47,15 +47,13 @@ namespace UltraManufacturing
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.Configure<SmtpOptions>(Configuration);
-            services.Configure<ContactOptions>(Configuration);
+            
             services.Configure<AuthOptions>(Configuration);
 
             var connectionString = Configuration.GetConnectionString("UltraManufacturingDatabase");
             services.AddDbContext<employeesContext>(options => options.UseSqlServer(connectionString));
 
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
-            services.AddSingleton<Smtp, Smtp>();
             services.AddSingleton<Cryptography>();
             services.AddScoped<UMAuthentication>();
             services.AddHttpContextAccessor();
